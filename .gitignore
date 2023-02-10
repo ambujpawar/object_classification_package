@@ -129,3 +129,7 @@ dmypy.json
 .pyre/
 
 venv/
+my_package/data/
+
+.DS_Store
+../.DS_Store
