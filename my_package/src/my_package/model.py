@@ -4,13 +4,14 @@ File aiming to support all the image classification models supported by torchvis
 import torch.nn as nn
 from torchvision import models
 
-def load_model(model_backbone: str, num_classes=37):
+
+def load_model(model_backbone: str, num_classes: int=37):
     """
     A function to load a model architecture from torchvision.
     Add 2 layers on top of the model to get the output of size num_classes.
     Params:
         model_backbone: backbone to use
-        num_classes: number of classes
+        num_classes: number of classes. Default is 37 for OxfordIIITPet dataset
     """
     if model_backbone == "resnet18":
         model = models.resnet18(pretrained=True)

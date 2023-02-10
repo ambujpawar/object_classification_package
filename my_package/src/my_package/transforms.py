@@ -9,7 +9,7 @@ from torchvision import transforms
 
 # Define the transformations
 
-def get_transforms():
+def get_transforms()-> dict:
     """
     Function to define the transformations.
     """

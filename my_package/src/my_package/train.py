@@ -9,6 +9,7 @@ Input:
 
 import argparse
 import copy
+from typing import Any
 
 # Third party imports
 from loguru import logger
@@ -27,23 +28,24 @@ from model import load_model
 BATCH_SIZE = 8
 LEARNING_RATE = 0.001
 NUM_EPOCHS = 100
+
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
 
-def train_model(model, dataloaders, dataset_sizes):
+def train_model(model: Any, dataloaders: dict, dataset_sizes: dict):
     """
     Function to train a model.
     Params:
         model: model to train
-        train_dataloader: train dataloader
-        test_dataloader: test dataloader
+        dataloaders: Dict containing the train and test dataloaders
+        dataset_sizes: Dict containing the size of the train and test datasets
     """
     best_acc = 0.0
     best_model_wts = copy.deepcopy(model.state_dict())
 
     criterion = nn.CrossEntropyLoss()
     optimizer = optim.Adam(model.fc.parameters(), lr=LEARNING_RATE)
-    # Decay LR by a factor of 0.1 every 7 epochs
+    # Decay LR by a factor of 0.1 every 10 epochs
     scheduler = lr_scheduler.StepLR(optimizer, step_size=10, gamma=0.1)
 
     for epoch in range(NUM_EPOCHS):
@@ -78,6 +80,7 @@ def train_model(model, dataloaders, dataset_sizes):
                 # statistics
                 running_loss += loss.item() * inputs.size(0)
                 running_corrects += torch.sum(preds == labels.data)
+
             if phase == 'train':
                 scheduler.step()
 
@@ -152,7 +155,6 @@ def main(args):
         torch.save(best_model.state_dict(), 'best_model.pt')
         mlflow.pytorch.log_model(best_model, "model")
         mlflow.end_run()
-
 
 
 if __name__ == "__main__":
