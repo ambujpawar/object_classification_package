@@ -40,3 +40,19 @@ def predict(url: str):
     pred_class = idx_to_class[preds.item()]
     logger.info(f"Predicted class: {pred_class}")
     return {"Predicted": pred_class}
+
+
+@app.post("/predict_to_n/")
+def predict_top_n(url: str, n: int = 3):
+    # Read image from URL using Pillow
+    image = Image.open(urllib.request.urlopen(url))
+
+    test_transforms = get_transforms()["test"]
+    image = test_transforms(image)
+    output = model(image.unsqueeze(0))
+    _, preds = torch.topk(output, n)
+    preds = preds.squeeze(0).tolist()
+    logger.info(f"Predicted classes: {preds}")
+    pred_classes = [idx_to_class[pred] for pred in preds]
+    logger.info(f"Predicted classes: {pred_classes}")
+    return {"Predicted": pred_classes}
