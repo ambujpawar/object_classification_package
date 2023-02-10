@@ -31,3 +31,5 @@ To run the API:
 uvicorn api:app --reload
 ```
 
+## Link to Colab Notebook
+https://colab.research.google.com/drive/1Ge7iqJNkllMNPqE4pRaaei28fCv2c-fD?usp=sharing
