@@ -133,3 +133,5 @@ my_package/data/
 
 .DS_Store
 ../.DS_Store
+
+**/mlruns/
