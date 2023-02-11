@@ -143,9 +143,9 @@ def main(args):
     dataset_sizes = {"train": len(dataset), "test": len(test_dataset)}
 
     mlflow.set_experiment("my_experiment")
-    mlflow.log_artifact(args.data_path)
 
     with mlflow.start_run():
+        mlflow.log_artifact(args.data_path)
         mlflow.log_param("backbone", args.backbone)
         mlflow.log_param("batch_size", BATCH_SIZE)
         mlflow.log_param("learning_rate", LEARNING_RATE)

@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "my-package"
+version = "0.1.0"
+description = "Train pet detection model. Learn streamlit, poetry, mlflow"
+authors = ["Ambuj Pawar <pawar.ambuj@gmail.com>"]
+readme = "README.md"
+packages = [{include = "my_package"}]
+
+[tool.poetry.dependencies]
+python = "^3.9.16"
+numba = "^0.56.0"
+numpy = "^1.23.2"
+torch = "^1.13.1"
+torchvision = "^0.14.1"
+mlflow = "^2.1.1"
+fastapi = "^0.91.0"
+uvicorn = "^0.20.0"
+streamlit = "^1.18.1"
+loguru = "^0.6.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
