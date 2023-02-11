@@ -33,3 +33,6 @@ uvicorn api:app --reload
 
 ## Link to Colab Notebook
 https://colab.research.google.com/drive/1Ge7iqJNkllMNPqE4pRaaei28fCv2c-fD?usp=sharing
+
+
+https://media-be.chewy.com/wp-content/uploads/2021/06/14090602/EnglishCockerSpaniel-FeaturedImage.jpg

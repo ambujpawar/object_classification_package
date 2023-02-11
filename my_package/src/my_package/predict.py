@@ -10,7 +10,6 @@ import torch
 import torch.nn as nn
 from loguru import logger
 # In module imports
-from torchvision.datasets import OxfordIIITPet
 from transforms import get_transforms
 from model import load_model
 

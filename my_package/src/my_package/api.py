@@ -7,6 +7,7 @@ import urllib.request
 from PIL import Image
 import torch
 from loguru import logger
+from pydantic import BaseModel
 # In module imports
 from model import load_model
 from transforms import get_transforms
@@ -22,15 +23,19 @@ with open('class_mapping.json', 'r') as f:
     idx_to_class = {v: k for k, v in class_to_idx.items()}
 
 
+class ImageUrl(BaseModel):
+    url: str
+
+
 @app.get("/")
 def read_root():
     return {"Hello": "World"}
 
-
 @app.post("/predict/")
-def predict(url: str):
+def predict(image_url: ImageUrl):
     # Read image from URL using Pillow
-    image = Image.open(urllib.request.urlopen(url))
+    print(image_url)
+    image = Image.open(urllib.request.urlopen(image_url.url))
 
     test_transforms = get_transforms()["test"]
     image = test_transforms(image)
