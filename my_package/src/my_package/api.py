@@ -12,8 +12,8 @@ from pydantic import BaseModel
 from model import load_model
 from transforms import get_transforms
 
-model = load_model("resnet18", num_classes=37)
-model.load_state_dict(torch.load("best_model.pt"))
+model = load_model("resnet50", num_classes=37)
+model.load_state_dict(torch.load("models/best_model_resnet50.pt", map_location=torch.device('cpu')))
 model.eval()
 
 app = FastAPI()
@@ -34,7 +34,6 @@ def read_root():
 @app.post("/predict/")
 def predict(image_url: ImageUrl):
     # Read image from URL using Pillow
-    print(image_url)
     image = Image.open(urllib.request.urlopen(image_url.url))
 
     test_transforms = get_transforms()["test"]
@@ -47,15 +46,15 @@ def predict(image_url: ImageUrl):
     return {"Predicted": pred_class}
 
 
-@app.post("/predict_to_n/")
-def predict_top_n(url: str, n: int = 3):
+@app.post("/predict_top_3/")
+def predict_top_n(image_url: ImageUrl):
     # Read image from URL using Pillow
-    image = Image.open(urllib.request.urlopen(url))
+    image = Image.open(urllib.request.urlopen(image_url.url))
 
     test_transforms = get_transforms()["test"]
     image = test_transforms(image)
     output = model(image.unsqueeze(0))
-    _, preds = torch.topk(output, n)
+    _, preds = torch.topk(output, 3)
     preds = preds.squeeze(0).tolist()
     logger.info(f"Predicted classes: {preds}")
     pred_classes = [idx_to_class[pred] for pred in preds]

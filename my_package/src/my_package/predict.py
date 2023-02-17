@@ -20,7 +20,6 @@ def main(args):
     """
     # Load the model weights
     model = load_model(args.backbone, num_classes=37)
-    torch.save(model.state_dict(), 'best_model.pt')
     model.load_state_dict(torch.load(args.model_path))
     model.eval()
 
@@ -33,7 +32,7 @@ def main(args):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--backbone", type=str, help="Name of the backbone to use")
+    parser.add_argument("--backbone", type=str, default="resnet50", help="Name of the backbone to use")
     parser.add_argument("--model_path", type=str, help="Path to the weights of the model")
     parser.add_argument("--image_path", type=str, help="Path to the image")
     args = parser.parse_args()

@@ -5,7 +5,7 @@ import torch.nn as nn
 from torchvision import models
 
 
-def load_model(model_backbone: str, num_classes: int=37):
+def load_model(model_backbone: str="resnet50", num_classes: int=37):
     """
     A function to load a model architecture from torchvision.
     Add 2 layers on top of the model to get the output of size num_classes.
